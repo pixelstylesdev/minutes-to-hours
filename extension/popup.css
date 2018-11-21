@@ -1,0 +1,16 @@
+body {
+  font-family: "Lucida Console", Monaco, monospace;
+  text-align: center;
+  width: 200px;
+}
+
+header {
+  border-bottom: 1px solid;
+  margin-bottom: 10px;
+}
+
+.btn.btn-primary,
+.btn.btn-primary:hover {
+  background-color: #9bd63d;
+  border-color: #9bd63d;
+}

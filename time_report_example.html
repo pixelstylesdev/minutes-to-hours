@@ -1,0 +1,2783 @@
+<html id="Html" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>
+    CoolCompany - Detailed Report
+  </title>
+  <link id="TimeClockCss" type="text/css" rel="stylesheet" href="/TimeClock/Styles/TimeClock2.css">
+  <link id="StandardCss" type="text/css" rel="stylesheet" href="/TimeClock/Styles/Standard3.css">
+  <link id="ColorCss" type="text/css" rel="stylesheet" href="/TimeClock/Styles/Color.ashx?Text=0F0003&amp;Background=D6D8DC&amp;Link=15667F&amp;TableHeader=10BFF4&amp;TableBody=F5FCFF">
+  <script src="/TimeClock/Scripts/TimeClock5.js"></script>
+</head>
+
+<body>
+
+  <div id="BannerArea">
+    <p>Detailed Report</p>
+    <div>
+      <div id="BannerLink"><a id="MenuButton" class="Button" href="/TimeClock/Menu?tab=Reports">Menu</a><a id="LogoutButton"
+          class="Button" href="/Login">Logout</a></div>
+      <p id="BannerLocation">CoolCompany</p>
+      <p id="BannerTitle">Detailed Report</p>
+      <div id="MenuArea">
+        <ul id="MenuUl" class="Mh">
+
+          <li id="FavoritesLi">
+            <div id="FavoritesMt" class="Mth" onclick="ShowTab(this,15,0,0,0,81,'','','')">Favorites</div>
+          </li>
+
+
+          <li id="FeaturesLi">
+            <div id="FeaturesMt" class="Mth" onclick="ShowTab(this,63,7,7,3,3,'Department','Project','Worksite')">Features</div>
+          </li>
+
+
+          <li id="ReportsLi">
+            <div id="ReportsMt" class="Mth" onclick="ShowTab(this,31,7,15,1,0,'Employee','','')">Reports</div>
+          </li>
+
+
+          <li id="SetupLi">
+            <div id="SetupMt" class="Mth" onclick="ShowTab(this,31,31,7,31,7,'Employee','','')">Setup</div>
+          </li>
+
+
+          <li id="TimeCardLi">
+            <div id="TimeCardMt" class="Mth" onclick="ShowTab(this,354,0,0,0,0,'','','')">Time Card</div>
+          </li>
+
+
+          <li id="UtilityLi">
+            <div id="UtilityMt" class="Mth" onclick="ShowTab(this,126,0,0,0,0,'CoolCompany','Admin','Support@')">Utility</div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div id="TopLinks" class="TopLinks NoPrint">
+    <form method="post" id="Filter" action="/TimeClock/ReportDetailed" onkeypress="if (event.keyCode == 13) { document.getElementsByName('DateRangeSubmit')[0].click(); return false; }">
+      <input type="hidden" id="EventTarget" name="EventTarget">
+      <table id="Filter" class="TimeClockTable Filter">
+        <tbody>
+          <tr>
+            <th colspan="2" class="tl">Date Filter</th>
+            <th id="PeopleFilterHeader" class="tm">People Filter</th>
+            <th id="HoursFilterHeader" class="tm">Hours Filter</th>
+            <th class="tr">Export</th>
+          </tr>
+          <tr>
+            <td class="bl top">
+              <div class="TitleMedium">Pay Period</div>
+
+              <div id="PayPeriodDays" class="TitleMedium">&nbsp;</div>
+
+              <div id="PayPeriodButton" class="TitleMedium"><input name="DisplayPayPeriods" type="submit" id="DisplayPayPeriods"
+                  value="Display Pay Periods"></div>
+            </td>
+            <td class="bm top">
+              <div class="TitleMedium">Date Range</div>
+              <div><input name="StartDate" type="text" id="StartDate" style="font-size:12pt;width:85px" value="11/12/2018">&nbsp;-&nbsp;<input
+                  name="EndDate" type="text" id="EndDate" style="font-size:12pt;width:85px" value="11/18/2018"></div>
+              <div class="TitleMedium"><input type="submit" name="DateRangeSubmit" value="Change Date"></div>
+            </td>
+            <td class="bm top">
+              <div id="StatusArea">
+                Display: Active
+              </div>
+
+
+
+              <div>Employee <select name="Employees" id="Employees" class="TextMedium" onchange="DoPostBack('Filter','EventTarget',this.id);">
+                  <option selected="selected" value="All">All</option>
+                  <option value="Padme Amidala">Padme Amidala</option>
+                  <option value="Han Solo">Han Solo</option>
+                  <option value="Leia Organa">Leia Organa</option>
+                  <option value="Lando Calrissian">Lando Calrissian</option>
+                  <option value="Anakin Skywalker">Anakin Skywalker</option>
+                  <option value="Obi-Wan Kenobi">Obi-Wan Kenobi</option>
+                  <option value="Qui-Gon Jinn">Qui-Gon Jinn</option>
+                  <option value="Boba Fett">Boba Fett</option>
+                  <option value="Jaba the Hutt">Jaba the Hutt</option>
+                  <option value="Jyn Erso">Jyn Erso</option>
+                  <option value="Captain Phasma">Captain Phasma</option>
+                  <option value="Finn">Finn</option>
+                  <option value="Yoda">Yoda</option>
+                  <option value="Kylo Ren">Kylo Ren</option>
+                  <option value="Poe Dameron">Poe Dameron</option>
+                  <option value="Luke Skywalker">Luke Skywalker</option>
+                  <option value="Maz Kanata">Maz Kanata</option>
+                  <option value="Rose Tico">Rose Tico</option>
+                  <option value="Rey">Rey</option>
+                </select></div>
+              <noscript>
+                <div class="TitleMedium"><input type="submit" name="PeopleSubmit" value="Submit" /></div>
+              </noscript>
+            </td>
+            <td id="HoursFilterColumn" class="bm top">
+              <div id="HoursContainer">
+                Hours <select name="Hours" id="Hours" class="TextMedium" onchange="DoPostBack('Filter','EventTarget',this.id);">
+                  <option selected="selected" value="All">All</option>
+                  <option value="RegularTime">Regular Time</option>
+                  <option value="Overtime">Overtime</option>
+                </select>
+              </div>
+
+
+
+
+
+              <noscript>
+                <div class="TitleMedium"><input type="submit" name="HoursSubmit" value="Submit" /></div>
+              </noscript>
+              <div id="ApprovalContainer">
+                Approvals <select name="showApproval" id="showApproval" class="TextMedium" onchange="DoPostBack('Filter','EventTarget',this.id);">
+                  <option selected="selected" value="No">Hide</option>
+                  <option value="Yes">Show</option>
+                </select>
+              </div>
+            </td>
+            <td class="br" style="padding-left: 8px; padding-right: 8px;">
+              <script type="text/javascript">
+                document.write('<div class="TitleMedium"><a href="javascript:window.print();">Print Report</a></div>');
+              </script>
+              <div class="TitleMedium"><a href="javascript:window.print();">Print Report</a></div>
+              <div class="TitleMedium"><a href="?Export=Excel" id="ReportExcel">Export to Excel</a></div>
+              <div id="ExportLink" class="TitleMedium"><a href="/TimeClock/ExportSummary?Export=Excel">Export to Excel
+                  (CSV)</a></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </form>
+  </div>
+
+  <div id="PrintPayPeriod" class="TitleLarge PrintOnly">11/12/2018 - 11/18/2018</div>
+  <div id="PageRoundingNote" class="TitleLarge"></div>
+  <div id="WorkweekNote" class="TitleLarge">The first workweek of this pay period started on 11/11/2018 at 12:00 AM</div>
+  <table class="TimeClockTable">
+    <thead>
+      <tr>
+        <th>Employee</th>
+        <th colspan="2">Date</th>
+        <th>In</th>
+        <th>Out</th>
+        <th>Hours</th>
+        <th>Day</th>
+        <th>Week</th>
+        <th>Pay Period</th>
+        <th class="NoPrint">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="TextMedium">Padme Amidala</td>
+        <td class="TextMedium" style="border-right:none;">Tue</td>
+        <td class="TextMediumRight" style="border-left:none;">11/13/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 8:30 AM Work">8:30 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 1:39 PM Work">1:39 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>5</b>h&nbsp;&nbsp;&nbsp;<b>9</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>5</b>h&nbsp;&nbsp;&nbsp;<b>9</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>5</b>h&nbsp;&nbsp;&nbsp;<b>9</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>5</b>h&nbsp;&nbsp;&nbsp;<b>9</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Padme Amidala';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Han Solo</td>
+        <td class="TextMedium" style="border-right:none;">Mon</td>
+        <td class="TextMediumRight" style="border-left:none;">11/12/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 8:09 AM Work">8:09 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 3:03 PM Work">3:03 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>6</b>h&nbsp;<b>54</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>6</b>h&nbsp;<b>54</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>6</b>h&nbsp;<b>54</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>6</b>h&nbsp;<b>54</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Han Solo';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Han Solo</td>
+        <td class="TextMedium" style="border-right:none;">Wed</td>
+        <td class="TextMediumRight" style="border-left:none;">11/14/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 8:00 AM Work">8:00 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 3:30 PM Work">3:30 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>7</b>h&nbsp;<b>30</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>7</b>h&nbsp;<b>30</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>14</b>h&nbsp;<b>24</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>14</b>h&nbsp;<b>24</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Han Solo';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Leia Organa</td>
+        <td class="TextMedium" style="border-right:none;">Mon</td>
+        <td class="TextMediumRight" style="border-left:none;">11/12/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 8:50 AM Work">8:50 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Leia Organa';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Leia Organa</td>
+        <td class="TextMedium" style="border-right:none;">Tue</td>
+        <td class="TextMediumRight" style="border-left:none;">11/13/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 8:56 AM Work">8:56 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Leia Organa';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Leia Organa</td>
+        <td class="TextMedium" style="border-right:none;">Wed</td>
+        <td class="TextMediumRight" style="border-left:none;">11/14/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 8:28 AM Work">8:28 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Leia Organa';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Leia Organa</td>
+        <td class="TextMedium" style="border-right:none;">Thu</td>
+        <td class="TextMediumRight" style="border-left:none;">11/15/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 8:56 AM Work">8:56 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Leia Organa';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Leia Organa</td>
+        <td class="TextMedium" style="border-right:none;">Fri</td>
+        <td class="TextMediumRight" style="border-left:none;">11/16/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/16/2018 8:54 AM Work">8:54 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Leia Organa';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Lando Calrissian</td>
+        <td class="TextMedium" style="border-right:none;">Mon</td>
+        <td class="TextMediumRight" style="border-left:none;">11/12/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 10:11 AM Work">10:11 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 4:05 PM Work">4:05 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>5</b>h&nbsp;<b>54</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>5</b>h&nbsp;<b>54</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>5</b>h&nbsp;<b>54</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>5</b>h&nbsp;<b>54</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Lando Calrissian';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Lando Calrissian</td>
+        <td class="TextMedium" style="border-right:none;">Tue</td>
+        <td class="TextMediumRight" style="border-left:none;">11/13/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 3:59 AM Work">3:59 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 8:30 AM Work">8:30 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 7:56 AM Work">7:56 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 2:36 PM Work">2:36 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>57</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>6</b>h&nbsp;&nbsp;&nbsp;<b>6</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>10</b>h&nbsp;&nbsp;&nbsp;<b>3</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>15</b>h&nbsp;<b>57</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>15</b>h&nbsp;<b>57</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Lando Calrissian';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Lando Calrissian</td>
+        <td class="TextMedium" style="border-right:none;">Wed</td>
+        <td class="TextMediumRight" style="border-left:none;">11/14/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 8:01 AM Work">8:01 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 11:33 AM Work">11:33 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 11:00 AM Work">11:00 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 3:58 PM Work">3:58 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>2</b>h&nbsp;<b>59</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>4</b>h&nbsp;<b>25</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>7</b>h&nbsp;<b>24</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>23</b>h&nbsp;<b>21</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>23</b>h&nbsp;<b>21</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Lando Calrissian';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Lando Calrissian</td>
+        <td class="TextMedium" style="border-right:none;">Thu</td>
+        <td class="TextMediumRight" style="border-left:none;">11/15/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 7:58 AM Work">7:58 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 12:30 PM Work">12:30 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 11:56 AM Work">11:56 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 3:40 PM Work">3:40 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>58</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>10</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>7</b>h&nbsp;&nbsp;&nbsp;<b>8</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>30</b>h&nbsp;<b>29</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>30</b>h&nbsp;<b>29</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Lando Calrissian';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Lando Calrissian</td>
+        <td class="TextMedium" style="border-right:none;">Fri</td>
+        <td class="TextMediumRight" style="border-left:none;">11/16/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/16/2018 8:01 AM Work">8:01 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/16/2018 12:30 PM Work">12:30 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/16/2018 11:57 AM Work">11:57 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/16/2018 6:33 PM Work">6:33 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>56</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>6</b>h&nbsp;&nbsp;&nbsp;<b>3</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>9</b>h&nbsp;<b>31</b>m</td>
+                <td class="L" title="Work Regular Rate">RR</td>
+              </tr>
+              <tr>
+                <td class="R" title="Overtime"><b>0</b>h&nbsp;<b>28</b>m</td>
+                <td class="L" title="Overtime">OT</td>
+              </tr>
+              <tr>
+                <td class="R T" title="Total"><b>9</b>h&nbsp;<b>59</b>m</td>
+                <td class="L T" title="Total">Total</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>40</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+                <td class="L" title="Work Regular Rate">RR</td>
+              </tr>
+              <tr>
+                <td class="R" title="Overtime"><b>0</b>h&nbsp;<b>28</b>m</td>
+                <td class="L" title="Overtime">OT</td>
+              </tr>
+              <tr>
+                <td class="R T" title="Total"><b>40</b>h&nbsp;<b>28</b>m</td>
+                <td class="L T" title="Total">Total</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>40</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+                <td class="L" title="Work Regular Rate">RR</td>
+              </tr>
+              <tr>
+                <td class="R" title="Overtime"><b>0</b>h&nbsp;<b>28</b>m</td>
+                <td class="L" title="Overtime">OT</td>
+              </tr>
+              <tr>
+                <td class="R T" title="Total"><b>40</b>h&nbsp;<b>28</b>m</td>
+                <td class="L T" title="Total">Total</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Lando Calrissian';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Anakin Skywalker</td>
+        <td class="TextMedium" style="border-right:none;">Mon</td>
+        <td class="TextMediumRight" style="border-left:none;">11/12/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 6:58 AM Work">6:58 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 2:38 PM Work">2:38 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>7</b>h&nbsp;<b>40</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>7</b>h&nbsp;<b>40</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>7</b>h&nbsp;<b>40</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>7</b>h&nbsp;<b>40</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Anakin Skywalker';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Qui-Gon Jinn</td>
+        <td class="TextMedium" style="border-right:none;">Tue</td>
+        <td class="TextMediumRight" style="border-left:none;">11/13/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 6:03 AM Work">6:03 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 10:35 AM Work">10:35 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 9:55 AM Work">9:55 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 4:31 PM Work">4:31 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>52</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>5</b>h&nbsp;<b>56</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>9</b>h&nbsp;<b>48</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>9</b>h&nbsp;<b>48</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>9</b>h&nbsp;<b>48</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Qui-Gon Jinn';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Jaba the Hutt</td>
+        <td class="TextMedium" style="border-right:none;">Mon</td>
+        <td class="TextMediumRight" style="border-left:none;">11/12/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 6:55 AM Work">6:55 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/12/2018 11:29 AM Work">11:29 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 10:55 AM Work">10:55 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/12/2018 2:10 PM Work">2:10 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>4</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>2</b>h&nbsp;<b>41</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>6</b>h&nbsp;<b>41</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>6</b>h&nbsp;<b>41</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>6</b>h&nbsp;<b>41</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Jaba the Hutt';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Jaba the Hutt</td>
+        <td class="TextMedium" style="border-right:none;">Tue</td>
+        <td class="TextMediumRight" style="border-left:none;">11/13/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 7:17 AM Work">7:17 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 10:35 AM Work">10:35 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 9:56 AM Work">9:56 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 4:32 PM Work">4:32 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>2</b>h&nbsp;<b>39</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>5</b>h&nbsp;<b>57</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>8</b>h&nbsp;<b>36</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>15</b>h&nbsp;<b>17</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>15</b>h&nbsp;<b>17</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Jaba the Hutt';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Jaba the Hutt</td>
+        <td class="TextMedium" style="border-right:none;">Wed</td>
+        <td class="TextMediumRight" style="border-left:none;">11/14/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 6:59 AM Work">6:59 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 11:30 AM Work">11:30 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 10:58 AM Work">10:58 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 2:44 PM Work">2:44 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>59</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>14</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>7</b>h&nbsp;<b>13</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>22</b>h&nbsp;<b>30</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>22</b>h&nbsp;<b>30</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Jaba the Hutt';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Jaba the Hutt</td>
+        <td class="TextMedium" style="border-right:none;">Thu</td>
+        <td class="TextMediumRight" style="border-left:none;">11/15/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 8:00 AM Work">8:00 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 12:03 PM Work">12:03 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>4</b>h&nbsp;&nbsp;&nbsp;<b>3</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>4</b>h&nbsp;&nbsp;&nbsp;<b>3</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>26</b>h&nbsp;<b>33</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>26</b>h&nbsp;<b>33</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Jaba the Hutt';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Captain Phasma</td>
+        <td class="TextMedium" style="border-right:none;">Mon</td>
+        <td class="TextMediumRight" style="border-left:none;">11/12/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 8:01 AM Work">8:01 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 11:48 AM Work">11:48 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>47</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>3</b>h&nbsp;<b>47</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>3</b>h&nbsp;<b>47</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>3</b>h&nbsp;<b>47</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Captain Phasma';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Captain Phasma</td>
+        <td class="TextMedium" style="border-right:none;">Tue</td>
+        <td class="TextMediumRight" style="border-left:none;">11/13/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 7:30 AM Work">7:30 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 11:47 AM Work">11:47 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>4</b>h&nbsp;<b>17</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>4</b>h&nbsp;<b>17</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>8</b>h&nbsp;&nbsp;&nbsp;<b>4</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>8</b>h&nbsp;&nbsp;&nbsp;<b>4</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Captain Phasma';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Captain Phasma</td>
+        <td class="TextMedium" style="border-right:none;">Sat</td>
+        <td class="TextMediumRight" style="border-left:none;">11/17/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/17/2018 8:01 PM Work">8:01 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/17/2018 9:36 PM Work">9:36 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>1</b>h&nbsp;<b>35</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>1</b>h&nbsp;<b>35</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>9</b>h&nbsp;<b>39</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>9</b>h&nbsp;<b>39</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Captain Phasma';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Finn</td>
+        <td class="TextMedium" style="border-right:none;">Tue</td>
+        <td class="TextMediumRight" style="border-left:none;">11/13/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 6:03 AM Work">6:03 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 10:35 AM Work">10:35 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 9:55 AM Work">9:55 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 4:32 PM Work">4:32 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>52</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>5</b>h&nbsp;<b>57</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>9</b>h&nbsp;<b>49</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>9</b>h&nbsp;<b>49</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>9</b>h&nbsp;<b>49</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Finn';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Finn</td>
+        <td class="TextMedium" style="border-right:none;">Wed</td>
+        <td class="TextMediumRight" style="border-left:none;">11/14/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 7:04 AM Work">7:04 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 11:31 AM Work">11:31 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 10:57 AM Work">10:57 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 3:00 PM Work">3:00 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>53</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>29</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>7</b>h&nbsp;<b>22</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>17</b>h&nbsp;<b>11</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>17</b>h&nbsp;<b>11</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Finn';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Finn</td>
+        <td class="TextMedium" style="border-right:none;">Thu</td>
+        <td class="TextMediumRight" style="border-left:none;">11/15/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 7:30 AM Work">7:30 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 1:28 PM Work">1:28 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>5</b>h&nbsp;<b>58</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>5</b>h&nbsp;<b>58</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>23</b>h&nbsp;&nbsp;&nbsp;<b>9</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>23</b>h&nbsp;&nbsp;&nbsp;<b>9</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Finn';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Kylo Ren</td>
+        <td class="TextMedium" style="border-right:none;">Tue</td>
+        <td class="TextMediumRight" style="border-left:none;">11/13/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 3:56 AM Work">3:56 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 8:29 AM Work">8:29 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 7:56 AM Work">7:56 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 3:03 PM Work">3:03 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>4</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>6</b>h&nbsp;<b>34</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>10</b>h&nbsp;<b>34</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>10</b>h&nbsp;<b>34</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>10</b>h&nbsp;<b>34</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Kylo Ren';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Kylo Ren</td>
+        <td class="TextMedium" style="border-right:none;">Wed</td>
+        <td class="TextMediumRight" style="border-left:none;">11/14/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 7:09 AM Work">7:09 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 11:30 AM Work">11:30 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 10:59 AM Work">10:59 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 2:06 PM Work">2:06 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>50</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>2</b>h&nbsp;<b>36</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>6</b>h&nbsp;<b>26</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>17</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>17</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Kylo Ren';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Kylo Ren</td>
+        <td class="TextMedium" style="border-right:none;">Fri</td>
+        <td class="TextMediumRight" style="border-left:none;">11/16/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/16/2018 7:58 AM Work">7:58 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/16/2018 12:30 PM Work">12:30 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/16/2018 11:56 AM Work">11:56 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/16/2018 4:47 PM Work">4:47 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>58</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>4</b>h&nbsp;<b>17</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>8</b>h&nbsp;<b>15</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>25</b>h&nbsp;<b>15</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>25</b>h&nbsp;<b>15</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Kylo Ren';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Poe Dameron</td>
+        <td class="TextMedium" style="border-right:none;">Mon</td>
+        <td class="TextMediumRight" style="border-left:none;">11/12/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 7:57 AM Work">7:57 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/12/2018 12:30 PM Work">12:30 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 11:59 AM Work">11:59 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/12/2018 2:36 PM Work">2:36 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>4</b>h&nbsp;&nbsp;&nbsp;<b>2</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>2</b>h&nbsp;&nbsp;&nbsp;<b>6</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>6</b>h&nbsp;&nbsp;&nbsp;<b>8</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>6</b>h&nbsp;&nbsp;&nbsp;<b>8</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>6</b>h&nbsp;&nbsp;&nbsp;<b>8</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Poe Dameron';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Poe Dameron</td>
+        <td class="TextMedium" style="border-right:none;">Tue</td>
+        <td class="TextMediumRight" style="border-left:none;">11/13/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 3:59 AM Work">3:59 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 8:30 AM Work">8:30 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 7:56 AM Work">7:56 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 12:37 PM Work">12:37 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>57</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>4</b>h&nbsp;&nbsp;&nbsp;<b>7</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>8</b>h&nbsp;&nbsp;&nbsp;<b>4</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>14</b>h&nbsp;<b>12</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>14</b>h&nbsp;<b>12</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Poe Dameron';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Poe Dameron</td>
+        <td class="TextMedium" style="border-right:none;">Wed</td>
+        <td class="TextMediumRight" style="border-left:none;">11/14/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 7:59 AM Work">7:59 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 11:30 AM Work">11:30 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 10:59 AM Work">10:59 AM</td>
+              </tr>
+              <tr>
+                <td class="R">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>3</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>17</b>h&nbsp;<b>12</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>17</b>h&nbsp;<b>12</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Poe Dameron';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Poe Dameron</td>
+        <td class="TextMedium" style="border-right:none;">Thu</td>
+        <td class="TextMediumRight" style="border-left:none;">11/15/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 7:59 AM Work">7:59 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>0</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable"></table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>17</b>h&nbsp;<b>12</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>17</b>h&nbsp;<b>12</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Poe Dameron';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Luke Skywalker</td>
+        <td class="TextMedium" style="border-right:none;">Tue</td>
+        <td class="TextMediumRight" style="border-left:none;">11/13/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 5:55 AM Work">5:55 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 9:31 AM Work">9:31 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>36</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>3</b>h&nbsp;<b>36</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>3</b>h&nbsp;<b>36</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>3</b>h&nbsp;<b>36</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Luke Skywalker';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Rose Tico</td>
+        <td class="TextMedium" style="border-right:none;">Mon</td>
+        <td class="TextMediumRight" style="border-left:none;">11/12/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 6:55 AM Work">6:55 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/12/2018 2:10 PM Work">2:10 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/12/2018 11:29 AM Work">11:29 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 12:00 AM Work">Midnight</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>4</b>h&nbsp;<b>34</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>9</b>h&nbsp;<b>50</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>14</b>h&nbsp;<b>24</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>14</b>h&nbsp;<b>24</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>14</b>h&nbsp;<b>24</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Rose Tico';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Rose Tico</td>
+        <td class="TextMedium" style="border-right:none;">Tue</td>
+        <td class="TextMediumRight" style="border-left:none;">11/13/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 12:00 AM Work">Midnight</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 7:56 AM Work">7:56 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/13/2018 3:56 AM Work">3:56 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/13/2018 8:29 AM Work">8:29 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>56</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;<b>33</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>4</b>h&nbsp;<b>29</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>18</b>h&nbsp;<b>53</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>18</b>h&nbsp;<b>53</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Rose Tico';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Rose Tico</td>
+        <td class="TextMedium" style="border-right:none;">Wed</td>
+        <td class="TextMediumRight" style="border-left:none;">11/14/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 6:59 AM Work">6:59 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 11:31 AM Work">11:31 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 10:58 AM Work">10:58 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 2:44 PM Work">2:44 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>59</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>3</b>h&nbsp;<b>13</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>7</b>h&nbsp;<b>12</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>26</b>h&nbsp;&nbsp;&nbsp;<b>5</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>26</b>h&nbsp;&nbsp;&nbsp;<b>5</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Rose Tico';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Rose Tico</td>
+        <td class="TextMedium" style="border-right:none;">Thu</td>
+        <td class="TextMediumRight" style="border-left:none;">11/15/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 7:59 AM Work">7:59 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 12:03 PM Work">12:03 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>4</b>h&nbsp;&nbsp;&nbsp;<b>4</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>4</b>h&nbsp;&nbsp;&nbsp;<b>4</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>30</b>h&nbsp;&nbsp;&nbsp;<b>9</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>30</b>h&nbsp;&nbsp;&nbsp;<b>9</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Rose Tico';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td colspan="10" style="height:5px;background-color:#10BFF4;"></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Rey</td>
+        <td class="TextMedium" style="border-right:none;">Wed</td>
+        <td class="TextMediumRight" style="border-left:none;">11/14/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 8:40 AM Work (Edited)">*8:40 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 9:45 AM Work (Edited)">*9:45 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 11:05 AM Work (Edited)">*11:05 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 1:02 PM Work (Edited)">*1:02 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 1:17 PM Work (Edited)">*1:17 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 2:54 PM Work (Edited)">*2:54 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 4:37 PM Work (Edited)">*4:37 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 5:16 PM Work (Edited)">*5:16 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/14/2018 9:20 AM Work (Edited)">*9:20 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 9:58 AM Work (Edited)">*9:58 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 11:23 AM Work (Edited)">*11:23 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 1:06 PM Work (Edited)">*1:06 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 1:52 PM Work (Edited)">*1:52 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 3:23 PM Work (Edited)">*3:23 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 4:46 PM Work (Edited)">*4:46 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/14/2018 5:19 PM Work (Edited)">*5:19 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;<b>40</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;<b>13</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;<b>18</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>4</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;<b>35</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;<b>29</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>9</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>3</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>2</b>h&nbsp;<b>31</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>2</b>h&nbsp;<b>31</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>2</b>h&nbsp;<b>31</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Rey';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+      <tr>
+        <td class="TextMedium">Rey</td>
+        <td class="TextMedium" style="border-right:none;">Thu</td>
+        <td class="TextMediumRight" style="border-left:none;">11/15/2018</td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 8:28 AM Work (Edited)">*8:28 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 10:05 AM Work (Edited)">*10:05 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 12:25 PM Work (Edited)">*12:25 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 1:57 PM Work (Edited)">*1:57 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 3:55 PM Work (Edited)">*3:55 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 4:15 PM Work (Edited)">*4:15 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 4:57 PM Work (Edited)">*4:57 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="11/15/2018 8:48 AM Work (Edited)">*8:48 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 10:10 AM Work (Edited)">*10:10 AM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 12:31 PM Work (Edited)">*12:31 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 3:11 PM Work (Edited)">*3:11 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 4:00 PM Work (Edited)">*4:00 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 4:20 PM Work (Edited)">*4:20 PM</td>
+              </tr>
+              <tr>
+                <td class="R" title="11/15/2018 5:01 PM Work (Edited)">*5:01 PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;<b>20</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>5</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>6</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>1</b>h&nbsp;<b>14</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>5</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>5</b>m</td>
+              </tr>
+              <tr>
+                <td class="R" title="Work"><b>0</b>h&nbsp;&nbsp;&nbsp;<b>4</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>1</b>h&nbsp;<b>59</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>4</b>h&nbsp;<b>30</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="StandardTable">
+            <tbody>
+              <tr>
+                <td class="R" title="Work Regular Rate"><b>4</b>h&nbsp;<b>30</b>m</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td class="NoPrint TitleMedium"><a href="JavaScript:document.getElementById('EmployeeSelect').value='Rey';document.getElementById('TimeCardEdit').submit();">Edit</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <form method="post" id="TimeCardEdit" action="/TimeClock/TimeCardEdit"><input type="hidden" id="EmployeeSelect" name="EmployeeSelect"></form>
+  <p id="UpButton" class="UpButtonArea"><a href="#Top"><img src="/TimeClock/Images/Top.png" alt="Back to the Top"></a></p>
+
+</body>
+
+</html>
